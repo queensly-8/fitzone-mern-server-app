@@ -7,7 +7,7 @@ const User = require("./models/User.js")
 const userRoutes = require("./routes/user.js");
 const workoutRoutes = require("./routes/workouts.js");
 
-require('dotenv').config();
+require('dotenv').config({path:'../.env'});
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.use(express.urlencoded({extended:true}));
 
 
 const corsOptions = {
-	origin: ['http://localhost:8080', 'http://localhost:3000'], // 
+	origin: ['http://localhost:8080', 'http://localhost:3000', 'https://fitzone-mern-client-app-kjzs.vercel.app'], // 
 	credentials: true,
 	optionsSuccessStatus: 200 
 }
