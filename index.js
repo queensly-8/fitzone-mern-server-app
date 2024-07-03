@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const corsOptions = {
-    origin: ["http://localhost:3000",'https://randomblog-mern-client-r57rv6z74-des-projects-c11f252c.vercel.app/'], // Allow requests from localhost:3000
+    origin: ["http://localhost:3000",'https://randomblog-mern-client-app.vercel.app/'], // Allow requests from localhost:3000
     credentials: true, // Allow cookies and authorization headers
 };
 
