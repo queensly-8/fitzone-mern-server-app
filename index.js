@@ -1,47 +1,50 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const User = require("./models/User.js");
-const Blog = require("./models/Blog.js");
+const User = require("./models/User.js")
 
 //Routes
-const userRoutes = require("./routers/user.js");
-const blogRoutes = require("./routers/blog.js");
+const userRoutes = require("./routes/user.js");
+const workoutRoutes = require("./routes/workouts.js");
 
-require('dotenv').config();
+require('dotenv').config({path:'../.env'});
 
 const app = express();
+
+
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended:true}));
+
 
 const corsOptions = {
-    origin: ["http://localhost:3000",'https://randomblog-mern-client-app.vercel.app/'], // Allow requests from localhost:3000
-    credentials: true, // Allow cookies and authorization headers
-};
+	origin: ['http://localhost:8080', 'http://localhost:3000', 'https://fitzone-mern-client-app-kjzs.vercel.app'], // 
+	credentials: true,
+	optionsSuccessStatus: 200 
+}
 
 app.use(cors(corsOptions));
 
-// Routes
-app.use("/users", userRoutes);
-app.use("/blog", blogRoutes);
 
 mongoose.connect(process.env.MONGODB_STRING, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).catch(error => console.error('MongoDB connection error:', error));
-
-mongoose.connection.on('error', err => {
-    console.error('MongoDB connection error:', err);
+	// useNewURLParser: true,
+	// useUnifiedTopology: true
 });
 
-mongoose.connection.once('open', () => {
-    console.log('Connected to MongoDB Atlas');
-});
+//Mongoose connection
+mongoose.connection.once('open', () => console.log('Now connected to MongoDB Atlas'));
 
-const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, () => {
-    console.log(`API is now online at http://localhost:${PORT}`);
-});
+// Backend Routes
+app.use("/users", userRoutes);
+app.use("/workout", workoutRoutes);
 
-module.exports = { app, mongoose };
+
+
+if(require.main === module){
+	app.listen(process.env.PORT || 3000, () => {
+		console.log(`API is now online at ${process.env.PORT || 3000}`)
+	})
+}
+
+
+module.exports = {app, mongoose};
